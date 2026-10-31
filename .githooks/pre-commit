@@ -1,0 +1,12 @@
+#!/bin/sh
+set -eu
+
+if ! command -v gitleaks >/dev/null 2>&1; then
+  echo 'Gitleaks is required for this repository pre-commit hook.' >&2
+  echo 'Install it from https://github.com/gitleaks/gitleaks and retry.' >&2
+  exit 1
+fi
+
+repo_root=$(git rev-parse --show-toplevel)
+cd "$repo_root"
+gitleaks git --staged --redact=100 --no-banner .
