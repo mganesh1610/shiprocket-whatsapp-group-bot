@@ -120,3 +120,13 @@ Shiprocket currently exposes the useful data in the tracking page HTML:
 - latest timeline rows from `trackingActivities.push(...)`
 
 The bot fingerprints the current status plus newest timeline activity. A new WhatsApp message is sent only when that fingerprint changes.
+
+## Security checks
+
+Install [GitLeaks](https://github.com/gitleaks/gitleaks), then enable the repository's pre-commit secret scan in your clone:
+
+```sh
+git config core.hooksPath .githooks
+```
+
+The hook scans staged changes. [Security review instructions](docs/security-review.md) cover a full-history GitLeaks scan, a Trivy dependency scan, and a pre-ship AI review prompt. Pull requests also run GitLeaks, Trivy, and CodeQL through GitHub Actions; Dependabot checks npm and workflow dependencies weekly. GitHub Actions runs security checks only and does not host the WhatsApp bot.
